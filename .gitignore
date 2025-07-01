@@ -1,0 +1,18 @@
+# Archivos comprimidos
+*.zip
+*.rar
+*.7z
+*.tar.gz
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Dataset y archivos de datos
+garbage_classification/
+*.pth
+*.pt
+
+
+# Logs
+*.log
