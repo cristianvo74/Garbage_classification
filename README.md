@@ -1,34 +1,33 @@
+# Automatic Waste Classification System Using Convolutional Neural Networks
 
-# Sistema de Clasificación Automática de Residuos Mediante Redes Neuronales Convolucionales
+## Overview
+This project aims to develop an intelligent system capable of automatically classifying different types of municipal solid waste using computer vision and deep learning techniques. The system employs a Convolutional Neural Network (ResNet-50) trained on a public dataset of garbage images, enabling it to identify seven main categories of recyclable materials.
 
-## Descripción General
-Este proyecto tiene como objetivo desarrollar un sistema inteligente capaz de clasificar automáticamente diferentes tipos de residuos sólidos urbanos utilizando técnicas de visión por computadora y aprendizaje profundo. El sistema emplea una red neuronal convolucional (ResNet-50) entrenada sobre un dataset público de imágenes de basura, permitiendo identificar siete categorías principales de materiales reciclables.
+The solution includes:
+- A reproducible Jupyter Notebook for model training and evaluation.
+- A script for real-time deployment using a webcam.
+- Documentation and configuration files to facilitate installation and usage.
 
-La solución incluye:
-- Un cuaderno Jupyter reproducible para entrenamiento y evaluación del modelo.
-- Un script para despliegue en tiempo real usando la cámara web.
-- Documentación y archivos de configuración para facilitar la instalación y uso.
+## Motivation
+Efficient waste management is crucial for environmental sustainability. Automating garbage classification reduces human error, improves recycling rates, and helps decrease cross-contamination between materials.
 
-## Motivación
-La gestión eficiente de residuos es fundamental para la sostenibilidad ambiental. Automatizar la clasificación de basura reduce errores humanos, mejora el reciclaje y contribuye a la reducción de contaminación cruzada entre materiales.
+## Project Structure
 
-## Estructura del Proyecto
+- `Classifier_training.ipynb`: Main notebook for model training and evaluation.
+- `realtime_classifier.py`: Script for real-time classification using a webcam.
+- `propuesta_proyecto_garbage_classification.md`: Project proposal and justification document.
+- `requirements.txt`: List of required dependencies.
+- `.gitignore`: Files and folders excluded from the repository.
+- `garbage_classification/`: Folder containing the dataset images (not included in the repository due to its size).
+- `mejor_modelo.pth` & `resnet50_Garbage_final.pth`: Trained model weights (not included in the repository).
 
-- `Classifier_training.ipynb`: Notebook principal para entrenamiento y evaluación del modelo.
-- `realtime_classifier.py`: Script para clasificación en tiempo real usando webcam.
-- `propuesta_proyecto_garbage_classification.md`: Documento de propuesta y justificación del proyecto.
-- `requirements.txt`: Lista de dependencias necesarias.
-- `.gitignore`: Archivos y carpetas excluidos del repositorio.
-- `garbage_classification/`: Carpeta con las imágenes del dataset (no incluida en el repositorio por tamaño).
-- `mejor_modelo.pth` y `resnet50_Garbage_final.pth`: Pesos del modelo entrenado (no incluidos en el repositorio).
+## System and Library Requirements
 
-## Requisitos del Sistema y Librerías
+- Python 3.8 or higher (3.11 recommended)
+- Operating System: Linux, Windows, or MacOS
+- GPU is optional for accelerating the training process.
 
-- Python 3.8 o superior (recomendado 3.11)
-- Sistema operativo: Linux, Windows o MacOS
-- GPU opcional para acelerar el entrenamiento
-
-### Principales librerías:
+### Main Libraries:
 - torch
 - torchvision
 - opencv-python
@@ -38,58 +37,62 @@ La gestión eficiente de residuos es fundamental para la sostenibilidad ambienta
 - matplotlib
 - tqdm
 
-## Instalación de Dependencias
+## Dependency Installation
 
-1. Clona el repositorio:
+1. Clone the repository:
    ```bash
-   git clone https://github.com/Joseph0choa/Garbage.git
+   git clone [https://github.com/Joseph0choa/Garbage.git](https://github.com/Joseph0choa/Garbage.git)
    cd Garbage
    ```
-2. (Opcional) Crea y activa un entorno conda:
-   ```bash
-   conda create -n Garbage python=3.11
-   conda activate Garbage
-   ```
-3. Instala las dependencias:
-   ```bash
-   pip install -r requirements.txt
-   ```
+2. (Optional) Create and activate a conda environment:
 
-## Guía Paso a Paso para Entrenar el Modelo
+```Bash
+conda create -n Garbage python=3.11
+conda activate Garbage 
+```
+3. Install the dependencies:
+```Bash
+pip install -r requirements.txt
+```
+## Step-by-Step Guide to Train the Model
 
-1. Descarga el dataset desde [Kaggle](https://www.kaggle.com/datasets/mostafaabla/garbage-classification) y colócalo en la carpeta `garbage_classification/`.
-2. Abre y ejecuta el notebook `Classifier_training.ipynb` para:
-   - Preprocesar los datos
-   - Definir y entrenar el modelo ResNet-50
-   - Validar y evaluar el rendimiento
-   - Guardar el modelo entrenado (`mejor_modelo.pth`)
+1.  Download the dataset from [Kaggle](https://www.kaggle.com/datasets/mostafaabla/garbage-classification) and place it in the `garbage_classification/` folder.
+2.  Open and run the `Classifier_training.ipynb` notebook to:
+    - Preprocess the data
+    - Define and train the ResNet-50 model
+    - Validate and evaluate its performance
+    - Save the trained model (`mejor_modelo.pth`)
 
-## Cómo Cargar el Modelo Entrenado
+---
 
-En cualquier script, puedes cargar el modelo así:
+## How to Load the Trained Model
+
+You can load the model in any script as follows:
+
 ```python
 import torch
 from torchvision import models
 import torch.nn as nn
 
 model = models.resnet50(weights=None)
-model.fc = nn.Linear(model.fc.in_features, 7)  # 7 clases
+model.fc = nn.Linear(model.fc.in_features, 7) # 7 classes
 model.load_state_dict(torch.load('mejor_modelo.pth', map_location='cpu'))
 model.eval()
 ```
 
-## Ejemplo de Despliegue en Tiempo Real (Webcam)
+## Real-Time Deployment Example (Webcam)
 
-1. Ejecuta el script:
-   ```bash
-   python realtime_classifier.py
-   ```
-2. Se abrirá una ventana mostrando la predicción en tiempo real sobre la imagen capturada por la cámara web. El color del texto corresponde a la categoría detectada.
-3. Presiona `ESC` para cerrar la ventana.
+1.  Run the script:
+    ```bash
+    python realtime_classifier.py
+    ```
+2.  A window will open, displaying the real-time prediction on the image captured by the webcam. The text color will correspond to the detected category.
+3.  Press `ESC` to close the window.
 
-## Créditos / Autores
+---
 
-**Cristian Andres Villarreal Orozco**  
-**Anderson Joseph Ochoa Trujillo**
+## Authors / Credits
 
-Proyecto para la asignatura **Redes Neuronales y Aprendizaje Profundo**
+**Cristian Andres Villarreal Orozco** **Anderson Joseph Ochoa Trujillo**
+
+Project for the **Neural Networks and Deep Learning** course.
